@@ -263,11 +263,13 @@ public class IntegerListTests {
     }
 
     @Test
-    public void shouldIntegerArrayToArrayList() {
+    public void shouldToArray() {
         IntegerList integerListExcepted = initialIntegerList();
+        integerListExcepted.add(TEN);
+        integerListExcepted.remove(TEN);
         Integer[] actualArrayInteger = {ZERO, ONE, TWO,THREE};
 
-        Assertions.assertEquals(arraytoString(actualArrayInteger), integerListExcepted.toString());
+        Assertions.assertEquals(arraytoString(actualArrayInteger), arraytoString(integerListExcepted.toArray()));
     }
 
     @Test

@@ -150,7 +150,9 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer[] toArray() {
-        return arrayList;
+        Integer[]result=new Integer[size];
+        System.arraycopy(arrayList,0,result,0,size);
+        return result;
     }
 
     public void fillArrayRandomNumberBySize(int newSize) {
