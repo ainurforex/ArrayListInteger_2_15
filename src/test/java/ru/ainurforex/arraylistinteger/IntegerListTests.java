@@ -310,8 +310,52 @@ public class IntegerListTests {
         Assertions.assertEquals(4, integerList.size());
     }
 
+    @Test
+    public void shoulSortBubble() {
+        IntegerList integerListActual = new IntegerList();
+        integerListActual.add(ZERO);
+        integerListActual.add(ONE);
+        integerListActual.add(TWO);
+        integerListActual.add(THREE);
+        IntegerList integerListExcepted = new IntegerList();
+        integerListExcepted.add(TWO);
+        integerListExcepted.add(ZERO);
+        integerListExcepted.add(THREE);
+        integerListExcepted.add(ONE);
+        integerListExcepted.sortBubble();
+        Assertions.assertEquals(true, integerListExcepted.equals(integerListActual));
+    }
 
-
+    @Test
+    public void shoulSortSelection() {
+        IntegerList integerListActual = new IntegerList();
+        integerListActual.add(ZERO);
+        integerListActual.add(ONE);
+        integerListActual.add(TWO);
+        integerListActual.add(THREE);
+        IntegerList integerListExcepted = new IntegerList();
+        integerListExcepted.add(TWO);
+        integerListExcepted.add(ZERO);
+        integerListExcepted.add(THREE);
+        integerListExcepted.add(ONE);
+        integerListExcepted.sortSelection();
+        Assertions.assertEquals(true, integerListExcepted.equals(integerListActual));
+    }
+    @Test
+    public void shoulSortInsertion() {
+        IntegerList integerListActual = new IntegerList();
+        integerListActual.add(ZERO);
+        integerListActual.add(ONE);
+        integerListActual.add(TWO);
+        integerListActual.add(THREE);
+        IntegerList integerListExcepted = new IntegerList();
+        integerListExcepted.add(TWO);
+        integerListExcepted.add(ZERO);
+        integerListExcepted.add(THREE);
+        integerListExcepted.add(ONE);
+        integerListExcepted.sortInsertion();
+        Assertions.assertEquals(true, integerListExcepted.equals(integerListActual));
+    }
     private static String arraytoString(Integer[] array) {
         String arrayInteger = "";
         for (int i = 0; i < array.length; i++) {
