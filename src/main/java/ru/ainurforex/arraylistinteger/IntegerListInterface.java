@@ -49,6 +49,7 @@ public interface IntegerListInterface {
     // Поиск элемента с конца.
     // Вернуть индекс элемента
     // или -1 в случае отсутствия.
+
     int lastIndexOf(Integer item);
 
     // Получить элемент по индексу.
@@ -77,9 +78,4 @@ public interface IntegerListInterface {
     // и вернуть его.
     Integer[] toArray();
 
-     void sortBubble();
-
-     void sortSelection();
-
-     void sortInsertion();
 }

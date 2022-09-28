@@ -93,24 +93,10 @@ public class IntegerList implements IntegerListInterface {
     @Override
     public boolean contains(Integer item) {
         int[]arr=integerArrayToIntArray();
-        int min = 0;
-        int max = arr.length - 1;
-
-        while (min <= max) {
-            int mid = (min + max) / 2;
-
-            if (item == arr[mid]) {
-                return true;
-            }
-
-            if (item < arr[mid]) {
-                max = mid - 1;
-            } else {
-                min = mid + 1;
-            }
-        }
-        return false;
+        sortSelectionInt(arr);
+        return binarySearch(arr,item);
     }
+
 
 
     @Override
@@ -178,6 +164,7 @@ public class IntegerList implements IntegerListInterface {
         }
     }
 
+
     public void sortBubble() {
         int[] arrayInt = integerArrayToIntArray();
         int sizeArrayInt = arrayInt.length;
@@ -191,20 +178,13 @@ public class IntegerList implements IntegerListInterface {
         intArrayToIntegerArray(arrayInt);
     }
 
+
     public void sortSelection() {
         int[] arrayInt = integerArrayToIntArray();
-        int sizeArrayInt = arrayInt.length;
-        for (int i = 0; i < sizeArrayInt - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < sizeArrayInt; j++) {
-                if (arrayInt[j] < arrayInt[minElementIndex]) {
-                    minElementIndex = j;
-                }
-            }
-            arrayInt = swapElements(arrayInt, i, minElementIndex);
-        }
+        sortSelectionInt(arrayInt);
         intArrayToIntegerArray(arrayInt);
     }
+
 
     public void sortInsertion() {
         int[] arrayInt = integerArrayToIntArray();
@@ -242,6 +222,17 @@ public class IntegerList implements IntegerListInterface {
         }
     }
 
+    private void sortSelectionInt(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(arr, i, minElementIndex);
+        }
+    }
     private int[] swapElements(int[] arrayInt, int indexA, int indexB) {
         int tmp = arrayInt[indexA];
         arrayInt[indexA] = arrayInt[indexB];
@@ -266,5 +257,25 @@ public class IntegerList implements IntegerListInterface {
         for (int i = 0; i < size; i++) {
             arrayList[i] = arrayInt[i];
         }
+    }
+
+    private boolean binarySearch(int[]arr,Integer item) {
+        int min = 0;
+        int max = arr.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (item == arr[mid]) {
+                return true;
+            }
+
+            if (item < arr[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
     }
 }
