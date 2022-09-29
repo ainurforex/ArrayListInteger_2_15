@@ -45,7 +45,7 @@ public class IntegerListTests {
     public void shouldAddItemInIndex0() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.add(0, TEN);
-        Integer[] IntegerArrayActual = {TEN, ZERO, ONE, TWO,THREE};
+        Integer[] IntegerArrayActual = {TEN, ZERO, ONE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -54,7 +54,7 @@ public class IntegerListTests {
     public void shouldAddItemInIndexToEndArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.add(2, TWELVE);
-        Integer[] IntegerArrayActual = {ZERO, ONE, TWELVE, TWO,THREE};
+        Integer[] IntegerArrayActual = {ZERO, ONE, TWELVE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -63,7 +63,7 @@ public class IntegerListTests {
     public void shouldAddItemInIndexToMiddleArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.add(1, ELEVEN);
-        Integer[] IntegerArrayActual = {ZERO, ELEVEN, ONE, TWO,THREE};
+        Integer[] IntegerArrayActual = {ZERO, ELEVEN, ONE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
 
@@ -89,7 +89,7 @@ public class IntegerListTests {
     public void shouldSetItemInIndex() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.set(0, TEN);
-        Integer[] IntegerArrayActual = {TEN, ONE, TWO,THREE};
+        Integer[] IntegerArrayActual = {TEN, ONE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -107,7 +107,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByItemZeroPositionInArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(ZERO);
-        Integer[] IntegerArrayActual = {ONE, TWO,THREE};
+        Integer[] IntegerArrayActual = {ONE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -116,7 +116,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByItemEndPositionInArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(THREE);
-        Integer[] IntegerArrayActual = {ZERO, ONE,TWO};
+        Integer[] IntegerArrayActual = {ZERO, ONE, TWO};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -125,7 +125,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByItemMiddlePositionInArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(ONE);
-        Integer[] IntegerArrayActual = {ZERO, TWO,THREE};
+        Integer[] IntegerArrayActual = {ZERO, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -141,7 +141,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByIndex0() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(0);
-        Integer[] IntegerArrayActual = {ONE, TWO,THREE};
+        Integer[] IntegerArrayActual = {ONE, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -150,7 +150,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByIndexEndOfArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(3);
-        Integer[] IntegerArrayActual = {ZERO, ONE,TWO};
+        Integer[] IntegerArrayActual = {ZERO, ONE, TWO};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -159,7 +159,7 @@ public class IntegerListTests {
     public void shouldRemoveItemByIndexMiddleOfArray() {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.remove(1);
-        Integer[] IntegerArrayActual = {ZERO, TWO,THREE};
+        Integer[] IntegerArrayActual = {ZERO, TWO, THREE};
         Assertions.assertEquals(IntegerArrayActual.length, integerListExcepted.size());
         Assertions.assertEquals(arraytoString(IntegerArrayActual), integerListExcepted.toString());
     }
@@ -267,7 +267,7 @@ public class IntegerListTests {
         IntegerList integerListExcepted = initialIntegerList();
         integerListExcepted.add(TEN);
         integerListExcepted.remove(TEN);
-        Integer[] actualArrayInteger = {ZERO, ONE, TWO,THREE};
+        Integer[] actualArrayInteger = {ZERO, ONE, TWO, THREE};
 
         Assertions.assertEquals(arraytoString(actualArrayInteger), arraytoString(integerListExcepted.toArray()));
     }
@@ -290,7 +290,6 @@ public class IntegerListTests {
 
         Assertions.assertEquals(false, integerListExcepted.equals(integerListActual));
     }
-
 
 
     @Test
@@ -338,6 +337,7 @@ public class IntegerListTests {
         integerListExcepted.sortSelection();
         Assertions.assertEquals(true, integerListExcepted.equals(integerListActual));
     }
+
     @Test
     public void shoulSortInsertion() {
         IntegerList integerListActual = new IntegerList();
@@ -353,6 +353,7 @@ public class IntegerListTests {
         integerListExcepted.sortInsertion();
         Assertions.assertEquals(true, integerListExcepted.equals(integerListActual));
     }
+
     private static String arraytoString(Integer[] array) {
         String arrayInteger = "";
         for (int i = 0; i < array.length; i++) {

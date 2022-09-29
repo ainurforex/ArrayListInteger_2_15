@@ -62,6 +62,7 @@ public interface IntegerListInterface {
     // Вернуть true/false или исключение,
     // если передан null.
     boolean equals(IntegerListInterface otherList);
+
     // Вернуть фактическое количество элементов.
     int size();
 

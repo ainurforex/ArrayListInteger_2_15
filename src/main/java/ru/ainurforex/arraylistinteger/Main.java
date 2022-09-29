@@ -5,7 +5,7 @@ public class Main {
         int numElements = 100000;
         IntegerList integerList1 = new IntegerList();
         long start = System.currentTimeMillis();
-         integerList1.fillArrayRandomNumberBySize(numElements);
+        integerList1.fillArrayRandomNumberBySize(numElements);
 
         System.out.println("Время формирования случайного массива мс. из " +
                 numElements + " элементов- " + (System.currentTimeMillis() - start));

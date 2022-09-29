@@ -92,11 +92,10 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public boolean contains(Integer item) {
-        int[]arr=integerArrayToIntArray();
-        sortSelectionInt(arr);
-        return binarySearch(arr,item);
+        int[] arr = integerArrayToIntArray();
+        quickSort(arr,0,arr.length-1);
+        return binarySearch(arr, item);
     }
-
 
 
     @Override
@@ -150,8 +149,8 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer[] toArray() {
-        Integer[]result=new Integer[size];
-        System.arraycopy(arrayList,0,result,0,size);
+        Integer[] result = new Integer[size];
+        System.arraycopy(arrayList, 0, result, 0, size);
         return result;
     }
 
@@ -183,7 +182,15 @@ public class IntegerList implements IntegerListInterface {
 
     public void sortSelection() {
         int[] arrayInt = integerArrayToIntArray();
-        sortSelectionInt(arrayInt);
+        for (int i = 0; i < arrayInt.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < arrayInt.length; j++) {
+                if (arrayInt[j] < arrayInt[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(arrayInt, i, minElementIndex);
+        }
         intArrayToIntegerArray(arrayInt);
     }
 
@@ -218,23 +225,42 @@ public class IntegerList implements IntegerListInterface {
 
     private void validateSize() {
         if (size >= arrayList.length) {
-            Integer[] arrayListCopy = arrayList;
-            arrayList = new Integer[size + 1 + Math.abs(size / 3)];
-            System.arraycopy(arrayListCopy, 0, arrayList, 0, arrayListCopy.length);
+            grow();
         }
     }
 
-    private void sortSelectionInt(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[minElementIndex]) {
-                    minElementIndex = j;
-                }
-            }
-            swapElements(arr, i, minElementIndex);
+    private void grow() {
+        Integer[] arrayListCopy = arrayList;
+        arrayList = new Integer[size + 1 + Math.abs(size / 2)];
+        System.arraycopy(arrayListCopy, 0, arrayList, 0, arrayListCopy.length);
+    }
+
+
+    private void quickSort(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
     }
+
+    private int partition(int[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
     private int[] swapElements(int[] arrayInt, int indexA, int indexB) {
         int tmp = arrayInt[indexA];
         arrayInt[indexA] = arrayInt[indexB];
@@ -261,7 +287,7 @@ public class IntegerList implements IntegerListInterface {
         }
     }
 
-    private boolean binarySearch(int[]arr,Integer item) {
+    private boolean binarySearch(int[] arr, Integer item) {
         int min = 0;
         int max = arr.length - 1;
 
