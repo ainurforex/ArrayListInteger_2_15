@@ -33,7 +33,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer add(Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         arrayList[size++] = item;
         return item;
@@ -41,7 +41,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer add(int index, Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         validateIndex(index);
         if (index == size) {
@@ -57,7 +57,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer set(int index, Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         validateIndex(index);
         arrayList[index] = item;
@@ -93,7 +93,7 @@ public class IntegerList implements IntegerListInterface {
     @Override
     public boolean contains(Integer item) {
         int[] arr = integerArrayToIntArray();
-        quickSort(arr,0,arr.length-1);
+        quickSort(arr, 0, arr.length - 1);
         return binarySearch(arr, item);
     }
 
@@ -159,7 +159,7 @@ public class IntegerList implements IntegerListInterface {
             newSize = 0;
         }
         size = newSize;
-        validateSize();
+        growIfNeeded();
         for (int i = 0; i < size; i++) {
             arrayList[i] = getRandomIntegerBetweenRange(0, size * 2);
         }
@@ -223,16 +223,16 @@ public class IntegerList implements IntegerListInterface {
     }
 
 
-    private void validateSize() {
+    private void growIfNeeded() {
         if (size >= arrayList.length) {
             grow();
         }
     }
 
     private void grow() {
-        Integer[] arrayListCopy = arrayList;
-        arrayList = new Integer[size + 1 + Math.abs(size / 2)];
-        System.arraycopy(arrayListCopy, 0, arrayList, 0, arrayListCopy.length);
+        System.out.println(arrayList.length);
+        arrayList = Arrays.copyOf(arrayList, size + 1 + size / 2);
+        System.out.println(arrayList.length);
     }
 
 
