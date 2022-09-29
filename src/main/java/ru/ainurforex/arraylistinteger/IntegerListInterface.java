@@ -49,6 +49,7 @@ public interface IntegerListInterface {
     // Поиск элемента с конца.
     // Вернуть индекс элемента
     // или -1 в случае отсутствия.
+
     int lastIndexOf(Integer item);
 
     // Получить элемент по индексу.
@@ -61,6 +62,7 @@ public interface IntegerListInterface {
     // Вернуть true/false или исключение,
     // если передан null.
     boolean equals(IntegerListInterface otherList);
+
     // Вернуть фактическое количество элементов.
     int size();
 
@@ -76,4 +78,5 @@ public interface IntegerListInterface {
     // из строк в списке
     // и вернуть его.
     Integer[] toArray();
+
 }

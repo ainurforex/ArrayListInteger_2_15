@@ -33,7 +33,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer add(Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         arrayList[size++] = item;
         return item;
@@ -41,7 +41,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer add(int index, Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         validateIndex(index);
         if (index == size) {
@@ -57,7 +57,7 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer set(int index, Integer item) {
-        validateSize();
+        growIfNeeded();
         validateItem(item);
         validateIndex(index);
         arrayList[index] = item;
@@ -92,8 +92,11 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public boolean contains(Integer item) {
-        return indexOf(item) != -1;
+        int[] arr = integerArrayToIntArray();
+        quickSort(arr, 0, arr.length - 1);
+        return binarySearch(arr, item);
     }
+
 
     @Override
     public int indexOf(Integer item) {
@@ -146,59 +149,55 @@ public class IntegerList implements IntegerListInterface {
 
     @Override
     public Integer[] toArray() {
-        return arrayList;
+        Integer[] result = new Integer[size];
+        System.arraycopy(arrayList, 0, result, 0, size);
+        return result;
     }
 
     public void fillArrayRandomNumberBySize(int newSize) {
         if (newSize < 0) {
-            newSize=0;
+            newSize = 0;
         }
-        size=newSize;
-        validateSize();
+        size = newSize;
+        growIfNeeded();
         for (int i = 0; i < size; i++) {
-            arrayList[i]=getRandomIntegerBetweenRange(0,size*2);
+            arrayList[i] = getRandomIntegerBetweenRange(0, size * 2);
         }
     }
 
-    public  void sortBubble() {
-        for (int i = 0; i < size - 1; i++) {
-            for (int j = 0; j < size - 1 - i; j++) {
-                if (arrayList[j] > arrayList[j + 1]) {
-                    swapElements( j, j + 1);
+
+    public void sortBubble() {
+        int[] arrayInt = integerArrayToIntArray();
+        int sizeArrayInt = arrayInt.length;
+        for (int i = 0; i < sizeArrayInt - 1; i++) {
+            for (int j = 0; j < sizeArrayInt - 1 - i; j++) {
+                if (arrayInt[j] > arrayInt[j + 1]) {
+                    arrayInt = swapElements(arrayInt, j, j + 1);
                 }
             }
         }
+        intArrayToIntegerArray(arrayInt);
     }
 
+
     public void sortSelection() {
-        for (int i = 0; i < size- 1; i++) {
+        int[] arrayInt = integerArrayToIntArray();
+        for (int i = 0; i < arrayInt.length - 1; i++) {
             int minElementIndex = i;
-            for (int j = i + 1; j < size; j++) {
-                if (arrayList[j] < arrayList[minElementIndex]) {
+            for (int j = i + 1; j < arrayInt.length; j++) {
+                if (arrayInt[j] < arrayInt[minElementIndex]) {
                     minElementIndex = j;
                 }
             }
-            swapElements(i, minElementIndex);
+            swapElements(arrayInt, i, minElementIndex);
         }
+        intArrayToIntegerArray(arrayInt);
     }
 
-    public  void sortInsertion() {
-        for (int i = 1; i < size; i++) {
-            int temp = arrayList[i];
-            int j = i;
-            while (j > 0 && arrayList[j - 1] >= temp) {
-                arrayList[j] = arrayList[j - 1];
-                j--;
-            }
-            arrayList[j] = temp;
-        }
-    }
-    public  void sortInsertionByInt() {
-        int[]arrayInt=new int[size];
-        for (int i = 0; i < size; i++) {
-            arrayInt[i]=arrayList[i];
-        }
-        int sizeArrayInt=arrayInt.length;
+
+    public void sortInsertion() {
+        int[] arrayInt = integerArrayToIntArray();
+        int sizeArrayInt = arrayInt.length;
         for (int i = 1; i < sizeArrayInt; i++) {
             int temp = arrayInt[i];
             int j = i;
@@ -208,48 +207,9 @@ public class IntegerList implements IntegerListInterface {
             }
             arrayInt[j] = temp;
         }
-        for (int i = 0; i < size; i++) {
-            arrayList[i]=arrayInt[i];
-        }
+        intArrayToIntegerArray(arrayInt);
     }
-    public  void sortQuick(int[] array, int low, int high) {
-        if (array.length == 0)
-            return;//завершить выполнение, если длина массива равна 0
 
-        if (low >= high)
-            return;//завершить выполнение если уже нечего делить
-
-        // выбрать опорный элемент
-        int middle = low + (high - low) / 2;
-        int opora = array[middle];
-
-        // разделить на подмассивы, который больше и меньше опорного элемента
-        int i = low, j = high;
-        while (i <= j) {
-            while (array[i] < opora) {
-                i++;
-            }
-
-            while (array[j] > opora) {
-                j--;
-            }
-
-            if (i <= j) {//меняем местами
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-                i++;
-                j--;
-            }
-        }
-
-
-        if (low < j)
-            sortQuick(array, low, j);
-
-        if (high > i)
-            sortQuick(array, i, high);
-    }
     private void validateIndex(int index) {
         if (index > size - 1 || index < 0) {
             throw new ArrayIndexOutOfBoundsException();
@@ -263,22 +223,87 @@ public class IntegerList implements IntegerListInterface {
     }
 
 
-    private void validateSize() {
+    private void growIfNeeded() {
         if (size >= arrayList.length) {
-            Integer[] arrayListCopy = arrayList;
-            arrayList = new Integer[size + 1 + Math.abs(size / 3)];
-            System.arraycopy(arrayListCopy, 0, arrayList, 0, arrayListCopy.length);
+            grow();
         }
     }
 
-    private  void swapElements(int indexA, int indexB) {
-        int tmp = arrayList[indexA];
-        arrayList[indexA] = arrayList[indexB];
-        arrayList[indexB] = tmp;
+    private void grow() {
+        System.out.println(arrayList.length);
+        arrayList = Arrays.copyOf(arrayList, size + 1 + size / 2);
+        System.out.println(arrayList.length);
     }
 
-    public static Integer getRandomIntegerBetweenRange(int min, int max){
-        int x = (int)(Math.random()*((max-min)+1))+min;
+
+    private void quickSort(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(int[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private int[] swapElements(int[] arrayInt, int indexA, int indexB) {
+        int tmp = arrayInt[indexA];
+        arrayInt[indexA] = arrayInt[indexB];
+        arrayInt[indexB] = tmp;
+        return arrayInt;
+    }
+
+    public static Integer getRandomIntegerBetweenRange(int min, int max) {
+        int x = (int) (Math.random() * ((max - min) + 1)) + min;
         return x;
+    }
+
+    private int[] integerArrayToIntArray() {
+        int[] arrayInt = new int[size];
+        for (int i = 0; i < size; i++) {
+            arrayInt[i] = arrayList[i];
+        }
+        return arrayInt;
+    }
+
+    private void intArrayToIntegerArray(int[] arrayInt) {
+        for (int i = 0; i < size; i++) {
+            arrayList[i] = arrayInt[i];
+        }
+    }
+
+    private boolean binarySearch(int[] arr, Integer item) {
+        int min = 0;
+        int max = arr.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (item == arr[mid]) {
+                return true;
+            }
+
+            if (item < arr[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
     }
 }
